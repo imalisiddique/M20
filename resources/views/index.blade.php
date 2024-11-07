@@ -18,6 +18,36 @@ tr:nth-child(even) {
 
 <h2>Product Lists</h2>
 
+<a href="{{ route('products.index') }}">All Products</a>
+<br>
+<br>
+
+<form>
+
+  
+  <select name="perPage" id="perpage">
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+  </select>
+  <select name="sortBy" id="sort">
+    <option value="name">Name</option>
+    <option value="price">Price</option>
+  </select>
+  <select name="order" id="order">
+    <option value="asc">ASC</option>
+    <option value="desc">DESC</option>
+  </select>
+
+  <input type="text" id="search" name="search" placeholder="search"><br><br>
+  <input type="submit" value="Submit">
+</form> 
+
+
 @if (session('success'))
     <div class="alert alert-success">
         {{ session('success') }}
