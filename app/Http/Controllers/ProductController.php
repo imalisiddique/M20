@@ -14,7 +14,17 @@ class ProductController extends Controller {
         $order = $request->order ?? 'asc';
         $search = $request->search;
 
-        $products = Product::orderBy( $sortBy, $order )->simplePaginate( $perPage );
+        $query = Product::query();
+
+        if ( $search ) {
+            $query = $query->where( 'product_id', 'like', '%' . $search . '%' )
+                ->orWhere( 'name', 'like', '%' . $search . '%' );
+        }
+
+        // $products = Product::orderBy( $sortBy, $order )->simplePaginate( $perPage );
+        // return $query->orderBy( $sortBy, $order )->simplePaginate( $perPage )->withQueryString();
+
+        $products = $query->orderBy( $sortBy, $order )->simplePaginate( $perPage )->withQueryString();
 
         return view( 'index', ['products' => $products] );
     }
@@ -51,17 +61,16 @@ class ProductController extends Controller {
 
     public function show( $id ) {
 
-        // $id = $request->id;
-
         $product = Product::findOrFail( $id );
-
         return view( 'show', compact( 'product' ) );
+
     }
 
     public function edit( $id ) {
-        $product = Product::findOrFail( $id );
 
+        $product = Product::findOrFail( $id );
         return view( 'edit', compact( 'product' ) );
+
     }
 
     public function update( Request $request, $id ) {
@@ -88,8 +97,10 @@ class ProductController extends Controller {
     }
 
     public function delete( $id ) {
+
         $product = Product::findOrFail( $id );
         $product->delete();
         return redirect()->back()->with( 'success', 'Product Deleted Successfully' );
+
     }
 }
