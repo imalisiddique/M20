@@ -43,8 +43,17 @@ class ProductController extends Controller {
             'description' => 'nullable',
             'price'       => 'required',
             'stock'       => 'nullable',
-            'image'       => 'nullable',
+            'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5000',
         ] );
+
+        if ( $request->hasFile( 'image' ) ) {
+            $file = $request->file( 'image' );
+            $extension = $file->getClientOriginalExtension();
+            $fileName = time() . '.' . $extension;
+            $file->move( public_path( 'upload/images' ), $fileName );
+        } else {
+            $fileName = 'image.jpg';
+        }
 
         Product::create( [
             "product_id"  => $request->input( 'product_id' ),
@@ -52,7 +61,7 @@ class ProductController extends Controller {
             "description" => $request->input( 'description' ),
             "price"       => $request->input( 'price' ),
             "stock"       => $request->input( 'stock' ),
-            "image"       => $request->input( 'image' ),
+            "image"       => $fileName,
         ] );
 
         return redirect()->route( 'products.index' )->with( 'success', 'Product created' );
@@ -80,8 +89,17 @@ class ProductController extends Controller {
             'description' => 'nullable',
             'price'       => 'required',
             'stock'       => 'nullable',
-            'image'       => 'nullable',
+            'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5000',
         ] );
+
+        if ( $request->hasFile( 'image' ) ) {
+            $file = $request->file( 'image' );
+            $extension = $file->getClientOriginalExtension();
+            $fileName = time() . '.' . $extension;
+            $file->move( public_path( 'upload/images' ), $fileName );
+        } else {
+            $fileName = 'image.jpg';
+        }
 
         $product = Product::findOrFail( $id );
 
@@ -90,7 +108,7 @@ class ProductController extends Controller {
             "description" => $request->input( 'description' ),
             "price"       => $request->input( 'price' ),
             "stock"       => $request->input( 'stock' ),
-            "image"       => $request->input( 'image' ),
+            "image"       => $fileName,
         ] );
 
         return redirect()->back()->with( 'success', 'Product Update Successfully' );

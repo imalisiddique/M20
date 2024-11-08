@@ -3,7 +3,7 @@
 {{ $product->description }}<br>
 {{ $product->price }}<br>
 {{ $product->stock }}<br>
-{{ $product->image }}<br>
+<img src="/upload/images/{{  $product->image }}" alt="" width="240px"><br>
 
 
 <a href="{{ route('products.create') }}">Create Product</a><br><br>

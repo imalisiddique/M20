@@ -15,7 +15,7 @@
         {{ $error }}
     @endforeach
 @endif
-<form method="POST" action="{{ route('products.store') }}">
+<form method="POST" action="{{ route('products.store') }}" enctype="multipart/form-data">
 
     @csrf
     @method('POST')
@@ -36,7 +36,7 @@
     <input type="number" name="stock" ><br><br>
 
     Product Image<br>
-    <input type="text"name="image" ><br><br>
+    <input type="file"name="image" ><br><br>
 
     <input type="submit" value="Submit">
 </form>

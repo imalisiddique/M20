@@ -43,8 +43,8 @@ tr:nth-child(even) {
     <option value="desc">DESC</option>
   </select>
 
-  <input type="text" id="search" name="search" placeholder="search"><br><br>
-  <input type="submit" value="Submit">
+  <input type="text" id="search" name="search" placeholder="Search Product"><br><br>
+  <input type="submit" value="Filter">
 </form> 
 
 
@@ -60,6 +60,7 @@ tr:nth-child(even) {
     <th>Product Description</th>
     <th>Price</th>
     <th>Stock</th>
+    <th>Image</th>
     <th></th>
   </tr>
 
@@ -69,6 +70,7 @@ tr:nth-child(even) {
     <td>{{ $product->description }} </td>
     <td>{{ $product->price }}</td>
     <td>{{ $product->stock }}</td>
+    <td><img src="/upload/images/{{  $product->image }}" alt="" width="80px"></td>
     <td><a href="{{ route('products.edit', $product->id) }}">Edit</a> | <a href="{{ route('products.show', $product->id) }}">View</a> | <form method="POST" action="{{ route('products.destroy', $product->id) }}"> @csrf @method('DELETE')<button>Delete</button></form></td>
   </tr>
   @endforeach
